@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.react.springboot.reactSpringbootTest.mapper.TestMapper">
+    <select id="allSelect" resultType="TestModel">
+        SELECT
+            ID
+            , TEXT
+        FROM
+            TEST
+    </select>
+
+    <select id="detailSelect" resultType="TestModel" parameterType="TestModel">
+        SELECT
+            ID
+            , TEXT
+        FROM
+            TEST
+        WHERE
+            ID = #{id}
+    </select>
+</mapper>
