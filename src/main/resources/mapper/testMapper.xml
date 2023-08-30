@@ -20,4 +20,27 @@
         WHERE
             ID = #{id}
     </select>
+
+    <update id="update" parameterType="map">
+        UPDATE
+            TEST
+        SET
+            TEXT = #{objText}
+        WHERE
+            ID IN
+        <foreach collection="objId" item="list" index="index" separator="," open="(" close=")">
+            #{list}
+        </foreach>
+    </update>
+
+    <delete id="delete" parameterType="map">
+        DELETE
+        FROM
+            TEST
+        WHERE
+            ID IN
+        <foreach collection="objId" item="list" separator="," open="(" close=")">
+            #{list}
+        </foreach>
+    </delete>
 </mapper>

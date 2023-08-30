@@ -1,16 +1,21 @@
 package com.react.springboot.reactSpringbootTest.controller;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.react.springboot.reactSpringbootTest.service.TestServiceImpl;
 import jakarta.annotation.PostConstruct;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.json.CDL;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.web.bind.annotation.*;
 import com.react.springboot.reactSpringbootTest.model.TestModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @RestController
 public class HelloWorldController {
@@ -59,4 +64,39 @@ public class HelloWorldController {
         return testServiceImpl.detailSelect(testModel);
     }
 
+    @GetMapping("/api/{gbn}")
+    public Map<String, String> update(@RequestParam Map<String,Object> params, @PathVariable String gbn)  {
+
+        System.out.println(gbn);
+        System.out.println("통신 성공@!"+params);
+        Map<String,String> resMessage = new HashMap<>();
+
+        // 업데이트/삭제 성공여부. 0 : 실팰, 1 : 성공
+        int result = 0;
+
+        // gbn 업데이트
+        if (gbn.equals("update")) {
+            result = testServiceImpl.update(params);
+
+            if (result == 0) {
+                resMessage.put("val", "0");
+                resMessage.put("message", "업데이트가 실패했습니다.");
+            } else {
+                resMessage.put("val", "1");
+                resMessage.put("message", "업데이트가 성공했습니다.");
+            }
+        } else {
+        // gbn delete
+            result = testServiceImpl.delete(params);
+
+            if (result == 0) {
+                resMessage.put("val", "0");
+                resMessage.put("message", "삭제가 실패했습니다.");
+            } else {
+                resMessage.put("val", "1");
+                resMessage.put("message", "삭제가 성공했습니다.");
+            }
+        }
+        return resMessage;
+    }
 }
