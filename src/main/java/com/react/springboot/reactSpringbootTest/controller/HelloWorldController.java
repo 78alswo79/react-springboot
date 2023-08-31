@@ -19,12 +19,7 @@ import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @RestController
 public class HelloWorldController {
-//    @GetMapping("/api/hello")
-//    public String test() {
-//        return "Hello, world!!";
-//    }
 
-//    @Autowired
     private TestServiceImpl testServiceImpl;
 
     public HelloWorldController(TestServiceImpl testServiceImpl) {
@@ -85,6 +80,7 @@ public class HelloWorldController {
                 resMessage.put("val", "1");
                 resMessage.put("message", "업데이트가 성공했습니다.");
             }
+
         } else {
         // gbn delete
             result = testServiceImpl.delete(params);
